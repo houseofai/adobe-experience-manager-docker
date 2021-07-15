@@ -1,0 +1,5 @@
+*.jar
+license.properties
+packages/*
+.idea/
+auth.json

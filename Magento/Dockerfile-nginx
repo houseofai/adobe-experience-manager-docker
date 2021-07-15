@@ -1,0 +1,19 @@
+FROM ubuntu
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update
+RUN apt-get install -y systemctl tzdata
+
+# NGINX
+RUN apt-get install -y nginx php7.4-fpm php7.4-cli
+COPY nginx/php-fpm.ini /etc/php/7.4/fpm/php.ini
+COPY nginx/php-cli.ini /etc/php/7.4/cli/php.ini
+
+
+
+#RUN systemctl restart php7.2-fpm
+
+
+
+EXPOSE 80
+#CMD ["systemctl", "start", "apache2"]
