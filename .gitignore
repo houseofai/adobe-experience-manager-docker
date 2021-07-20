@@ -3,3 +3,4 @@ license.properties
 packages/*
 .idea/
 auth.json
+*.zip
