@@ -34,5 +34,8 @@ https://experience.adobe.com/#/downloads/content/software-distribution/en/aem.ht
 ## Setup
 
 `git clone https://github.com/houseofai/aem-demo-docker.git`
- 
-`docker build -t adobe/aem-demo .`
+
+`docker build -t houseofai/aem:6.5.9 .`
+
+# Run AEM
+`docker run -it -p 4502:4502 --network "host" houseofai/aem:6.5.9`

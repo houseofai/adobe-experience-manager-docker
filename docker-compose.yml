@@ -130,6 +130,19 @@ services:
     depends_on:
       varnish:
         condition: service_started
+  author:
+    hostname: author.aem.docker
+    image: 'houseofai/aem:6.5.9'
+    networks:
+      magento:
+        aliases:
+          - magento2.docker
+    ports:
+      - '4502:4502'
+    depends_on:
+      tls:
+        condition: service_started
+
   generic:
     hostname: generic.magento2.docker
     image: 'magento/magento-cloud-docker-php:7.4-cli-1.2.4'

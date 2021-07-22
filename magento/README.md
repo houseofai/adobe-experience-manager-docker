@@ -39,10 +39,10 @@ cd magento
 ### 4. Copy the Composer authentication file to the local directory (Note: if your auth.json file is already on your Composer config folder, you can skip this step)
 `cp ../auth.json .`
 
-### 5. Command that import all vendors packages
+### 5. Import all vendors packages
 `composer require --no-update --dev magento/ece-tools magento/magento-cloud-docker`
 
-### 6. Command that creates the ece-docker tool
+### 6. Creates the ece-docker tool
 `composer update`
 
 ### 7. Create `.magento.docker.yml` with content from https://devdocs.magento.com/cloud/docker/docker-installation.html, so the ece-tools will find all necessary configuration
