@@ -4,3 +4,4 @@ packages/*
 .idea/
 auth.json
 *.zip
+projects/

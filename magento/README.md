@@ -51,31 +51,31 @@ cd magento
 ### 8. Disable memory limit in `.docker/config.env`
 `memory_limit = -1`
 
-### . Replace `docker-compose-yml` with the file from my git
+### 9. Replace `docker-compose-yml` with the file from my git
 
-### . Start all containers
+### 10. Start all containers
 `docker-compose up`
 
-### . Enable all modules (and cleared all generated classes)
+### 11. Enable all modules (and cleared all generated classes)
 `docker-compose run --rm deploy magento-command module:enable --all --clear-static-content`
 
-### . Disable Two Factor Authentication for easier authentication
+### 12. Disable Two Factor Authentication for easier authentication
 `docker-compose run --rm deploy magento-command module:disable Magento_TwoFactorAuth`
 
-### . Deploy Magento
+### 13. Deploy Magento
 `docker-compose run --rm deploy cloud-deploy`
 
-### . Deploy sample data (takes couple of minutes)
+### 14. Deploy sample data (takes couple of minutes)
 `docker-compose run --rm deploy magento-command sampledata:deploy`
 *Note*: This command might ask for your `repo.magento.com` username/password which is your public/private key stored on `auth.json`
 
-### . Upgrade Magento installation
+### 15. Upgrade Magento installation
 `docker-compose run --rm deploy magento-command setup:upgrade`
 
-### . Compile classes
+### 16. Compile classes
 `docker-compose run --rm deploy magento-command setup:di:compile`
 
-### . Flush cache
+### 17. Flush cache
 `docker-compose run --rm deploy magento-command cache:clean`
 
 
