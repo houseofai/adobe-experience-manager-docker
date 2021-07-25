@@ -4,7 +4,7 @@ The Adobe Experience Manager (AEM) docker image is an **unofficial** docker imag
 
 The default image runs AEM as an **Author** on port **4502** (as recommended officially), and it includes the latest features pack and demo pack to demo all functionalities.
 
-## 1. Prerequisites:
+## Prerequisites
 Adobe Experience Manager is a non-free application sold by Adobe. Thus, you need to acquire a license as an Adobe partner or as an Adobe customer.
 - The AEM license file named `license.properties` with the four properties:
 ```
@@ -14,7 +14,9 @@ license.product.version=<Product Version>
 license.downloadID=<key>
 ```
 
-## 2. Pull the Docker image:
+## Run
+
+### 1. Pull the Docker image:
 
 ```
 docker pull houseofai/aem
@@ -23,7 +25,7 @@ docker pull houseofai/aem
 
 If you have a slow network connection or if you don't want to download that big image, jump to the Build section to see how to build your own image.
 
-### 3. Run the Container
+### 2. Run the Container
 
 ```
 docker run -p 4502:4502 -e name="<name>" -e downloadID="<key>" -t houseofai/aem
@@ -42,7 +44,7 @@ Once up and running, the docker container will automatically show the main AEM l
 
 ## Stop Adobe Experience Manager
 
-To stop the AEM container, you can press `Ctrl+C` on the terminal or by finding the container id and stop it using docker daemon.
+To stop the AEM container, find the container id and stop it using docker daemon.
 
 ### 1. Get the running container id
 
@@ -60,7 +62,10 @@ Look for the AEM container id in the container list.
 
 `docker container stop {container_id}`
 
-# Instruction for setting up an AEM Demo Docker image
+## Build (Optional)
+### Instruction for setting up an AEM Demo Docker image
+
+For information, the link to a local AEM installation:
 
 https://experienceleague.adobe.com/docs/experience-manager-learn/foundation/development/set-up-a-local-aem-development-environment.html?lang=en
 
