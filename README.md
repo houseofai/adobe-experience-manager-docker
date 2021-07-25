@@ -1,88 +1,82 @@
-# Adobe Experience Manager and Adobe Commerce integrated and dockerized
+# aem-demo-docker
 
-*Note:* This integration should be use for demo or development purpose only as it is not properly configured for production.
+The Adobe Experience Manager (AEM) docker image is an **unofficial** docker image build to quickly demo AEM without installing any additional package.
+
+The default image runs AEM as an **Author** on port **4502** (as recommended officially), and it includes the latest features pack and demo pack to demo all functionalities.
+
+## 1. Prerequisites:
+Adobe Experience Manager is a non-free solution sold by Adobe. Thus you need to acquire a license as an Adobe partner or as an Adobe customer.
+- The AEM license file named `license.properties` with the four properties:
+```
+license.product.name=Adobe Experience Manager
+license.customer.name=<Customer/Partner Name>
+license.product.version=<Product Version>
+license.downloadID=<Key>
+```
+
+## 2. Pull the **Adobe Experience Manager** Docker image from Docker Hub:
+
+```
+docker pull houseofai/aem
+```
+*Note:* It's a ~10Gb image. So, seat tight and get a coffee.
+
+If you have a very slow network connection or if you don't want to download that big image, jump to the Build section to see how to build your own image.
+
+### 3. Run the **Adobe Experience Manager** Container
+
+```
+docker run -p 4502:4502 -e name="<Customer/Partner Name>" -e downloadID="<Key>" -t houseofai/aem
+```
+where *Customer/Partner Name* is your Customer/Partner Name and *Key* is your downloadID taken from the `license.properties` file. For example:
+
+```
+docker run -p 4502:4502 -e name="SuperMarketStore" -e downloadID="123456" -t houseofai/aem
+```
+*Note* that you can also change the port of the container will be mapped to (not the AEM port):
+```
+docker run -p 80:4502 -e name="SuperMarketStore" -e downloadID="123456" -t houseofai/aem
+```
+
+Once up and running, the docker container will automatically show the main AEM log file `error.log` using linux tool `tail`
+
+## Stop Adobe Experience Manager
+
+To stop the AEM container, you can press `Ctrl+C` on the terminal or by finding the container id and stop it using docker daemon
+
+### 1. Get the running container id
+
+```
+docker container ps
+```
+Look for the AEM container id in the container list
 
 
-## Prerequisites
-- Docker: It goes without saying but Docker need to be installed.
+### 2. Stop AEM
 
-### For Magento
-- [Composer](https://getcomposer.org/): If Composer is not installed, the init script will install it.
-- A **Public/Private key** to access `repo.magento.com`. You can create them on [https://marketplace.magento.com/](https://marketplace.magento.com). Check [the official documentation](https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html) on how to set it up.
+`docker container exec {container_id} /root/aem-sdk/author/crx-quickstart/bin/stop && sleep 1m`
 
-### For Adobe Experience Manager
-- A **license key** for Adobe Experience Manager 6.5.9 (named: license.properties)
+### 3. Stop the container
+
+`docker container stop {container_id}`
+
+# Instruction for setting up an AEM Demo Docker image
+
+https://experienceleague.adobe.com/docs/experience-manager-learn/foundation/development/set-up-a-local-aem-development-environment.html?lang=en
+
+### Packages
+#### AEM Jar file and AEM Demo Utils package
+Download and place the AEM jar file inside the `aem` folder and download the Demo Utils package in side the `packages` folder
+https://external.adobedemo.com/content/demo-hub/en/demos/external/aem-demo-utils.html
+
+#### AEM packages (Feature Packs, Hotfix)
+Download and place all packages to be installed during the AEM startup phase inside the `packages` folder
+https://experience.adobe.com/#/downloads/content/software-distribution/en/aem.html
 
 ## Setup
 
-### 1. Clone this repository
-```
-git clone https://github.com/houseofai/aem-demo-docker.git
-cd aem-demo-docker
-```
+`git clone https://github.com/houseofai/aem-demo-docker.git`
 
-### 2. Composer authentication file:
-Create a file named `auth.json` and insert the content below:
+Adapt your build by modifying the `Dockerfile`
 
-```
-{
-    "http-basic": {
-        "repo.magento.com": {
-            "username": "<public-key>",
-            "password": "<private-key>"
-        }
-    }
-}
-```
-Replace `<public-key>` and `<private-key>` with the keys you copied from the magento website.
-
-### 3. AEM License key:
-Place the Adobe Experience Manager license file in the `aem` folder.
-
--aem
-  |- license.properties
-
-### 4. Download Docker images and initialize Magento
-Run the `init.sh` script:
-```
-chmod +x init.sh
-./init.sh
-```
-*Note:* As Docker need to be run as a root user, the terminal might prompt for your root password when executing Docker commands (e.g.: `sudo docker run ...`)
-
-*Note:* On the first run, Docker needs to download couple of images to run Magento (Redis, Varnish, FPM, Nginx, MariaDB, AEM). If your system doesn't have those images locally, it might take a while depending on your internet connection.
-
-
-## Start
-```
-cd projects/magento
-sudo docker-compose up
-```
-
-## Test
-
-### Adobe Experience Manager: [http://localhost:4502](http://localhost:4502)
-```
-username = admin
-password = admin
-```
-
-### Magento Web shop: [https://localhost](https://localhost)
-
-### Magento back-end: [https://localhost/admin](https://localhost/admin)
-```
-username = Admin
-password = 123123q
-```
-
-## Shutdown
-
-```
-cd projects/magento
-sudo docker-compose stop
-```
-or to shutdown docker containers and remove them (and loose all your changes)
-```
-cd projects/magento
-sudo docker-compose down
-```
+`docker build -t <your-tag> .`

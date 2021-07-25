@@ -2,7 +2,7 @@
 FROM openjdk:11
 
 ARG PACKAGES_DIR=packages
-ARG AEM_DIR=/aem
+ARG AEM_DIR=aem
 ARG DEBIAN_FRONTEND=noninteractive
 ARG MODE=author
 ARG PORT=4502
@@ -10,8 +10,8 @@ ARG PORT=4502
 
 RUN apt-get update && apt-get install -y maven git \
       && mvn -version \
-      && mkdir -p /root/.m2/repository
-COPY ./maven/settings.xml /root/.m2
+      && mkdir -p ~/.m2/repository
+COPY ./maven/settings.xml ~/.m2
 ## Check Adobe profile
 #RUN mvn help:effective-settings | grep adobe-public
 
@@ -19,12 +19,12 @@ COPY ./maven/settings.xml /root/.m2
 RUN mkdir -p $AEM_DIR
 
 # Author
-COPY ./cq-quickstart-*.jar $AEM_DIR/aem-$MODE-p$PORT.jar
-COPY ./license.properties $AEM_DIR
+COPY $AEM_DIR/cq-quickstart-*.jar $AEM_DIR/aem-$MODE-p$PORT.jar
+COPY $AEM_DIR/license.properties $AEM_DIR
 RUN cd $AEM_DIR && java -jar aem-$MODE-p$PORT.jar -unpack
 
 # Copy the packages for startup installation
-COPY ./$PACKAGES_DIR $AEM_DIR/crx-quickstart/install/
+COPY ./$PACKAGES_DIR /$AEM_DIR/crx-quickstart/install/
 
 # Install CIF Components & Venia
 # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
@@ -43,5 +43,5 @@ RUN chmod +x $AEM_DIR/crx-quickstart/bin/start $AEM_DIR/crx-quickstart/bin/stop 
         && sleep 1m
 
 # Run AEM
-EXPOSE 4502
+EXPOSE $PORT
 CMD ["sh","-c","/aem/crx-quickstart/bin/start && tail -f /aem/crx-quickstart/logs/error.log"]
