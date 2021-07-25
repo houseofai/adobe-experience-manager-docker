@@ -5,7 +5,7 @@ The Adobe Experience Manager (AEM) docker image is an **unofficial** docker imag
 The default image runs AEM as an **Author** on port **4502** (as recommended officially), and it includes the latest features pack and demo pack to demo all functionalities.
 
 ## 1. Prerequisites:
-Adobe Experience Manager is a non-free solution sold by Adobe. Thus you need to acquire a license as an Adobe partner or as an Adobe customer.
+Adobe Experience Manager is a non-free application sold by Adobe. Thus, you need to acquire a license as an Adobe partner or as an Adobe customer.
 - The AEM license file named `license.properties` with the four properties:
 ```
 license.product.name=Adobe Experience Manager
