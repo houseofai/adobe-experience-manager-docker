@@ -1,6 +1,6 @@
 *.jar
 license.properties
-packages/*
+packages/*.zip
 .idea/
 auth.json
 *.zip

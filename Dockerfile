@@ -20,7 +20,7 @@ RUN mkdir -p $AEM_DIR
 
 # Author
 COPY $AEM_DIR/cq-quickstart-*.jar $AEM_DIR/aem-$MODE-p$PORT.jar
-COPY $AEM_DIR/license.properties $AEM_DIR
+#COPY $AEM_DIR/license.properties $AEM_DIR
 RUN cd $AEM_DIR && java -jar aem-$MODE-p$PORT.jar -unpack
 
 # Copy the packages for startup installation

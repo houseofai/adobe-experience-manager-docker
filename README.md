@@ -1,4 +1,4 @@
-# aem-demo-docker
+# Unofficial Adobe Experience Manager docker image for Demo
 
 The Adobe Experience Manager (AEM) docker image is an **unofficial** docker image build to quickly demo AEM without installing any additional package.
 
