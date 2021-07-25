@@ -8,7 +8,7 @@ ARG MODE=author
 ARG PORT=4502
 
 
-RUN apt-get update && apt-get install -y maven git \
+RUN apt-get update && apt-get install -y maven git parallel rpl \
       && mvn -version \
       && mkdir -p ~/.m2/repository
 COPY ./maven/settings.xml ~/.m2
@@ -20,7 +20,7 @@ RUN mkdir -p $AEM_DIR
 
 # Author
 COPY $AEM_DIR/cq-quickstart-*.jar $AEM_DIR/aem-$MODE-p$PORT.jar
-#COPY $AEM_DIR/license.properties $AEM_DIR
+COPY $AEM_DIR/license.properties $AEM_DIR
 RUN cd $AEM_DIR && java -jar aem-$MODE-p$PORT.jar -unpack
 
 # Copy the packages for startup installation
@@ -44,4 +44,6 @@ RUN chmod +x $AEM_DIR/crx-quickstart/bin/start $AEM_DIR/crx-quickstart/bin/stop 
 
 # Run AEM
 EXPOSE $PORT
-CMD ["sh","-c","/aem/crx-quickstart/bin/start && tail -f /aem/crx-quickstart/logs/error.log"]
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]

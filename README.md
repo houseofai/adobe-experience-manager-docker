@@ -9,26 +9,26 @@ Adobe Experience Manager is a non-free solution sold by Adobe. Thus you need to 
 - The AEM license file named `license.properties` with the four properties:
 ```
 license.product.name=Adobe Experience Manager
-license.customer.name=<Customer/Partner Name>
+license.customer.name=<name>
 license.product.version=<Product Version>
-license.downloadID=<Key>
+license.downloadID=<key>
 ```
 
-## 2. Pull the **Adobe Experience Manager** Docker image from Docker Hub:
+## 2. Pull the Docker image:
 
 ```
 docker pull houseofai/aem
 ```
-*Note:* It's a ~10Gb image. So, seat tight and get a coffee.
+*Note:* It's a ~10Gb image. So, sit tight and get a coffee.
 
-If you have a very slow network connection or if you don't want to download that big image, jump to the Build section to see how to build your own image.
+If you have a slow network connection or if you don't want to download that big image, jump to the Build section to see how to build your own image.
 
-### 3. Run the **Adobe Experience Manager** Container
+### 3. Run the Container
 
 ```
-docker run -p 4502:4502 -e name="<Customer/Partner Name>" -e downloadID="<Key>" -t houseofai/aem
+docker run -p 4502:4502 -e name="<name>" -e downloadID="<key>" -t houseofai/aem
 ```
-where *Customer/Partner Name* is your Customer/Partner Name and *Key* is your downloadID taken from the `license.properties` file. For example:
+where `name` is your Customer/Partner Name and `key` is your downloadID taken from the `license.properties` file. For example:
 
 ```
 docker run -p 4502:4502 -e name="SuperMarketStore" -e downloadID="123456" -t houseofai/aem
@@ -42,14 +42,14 @@ Once up and running, the docker container will automatically show the main AEM l
 
 ## Stop Adobe Experience Manager
 
-To stop the AEM container, you can press `Ctrl+C` on the terminal or by finding the container id and stop it using docker daemon
+To stop the AEM container, you can press `Ctrl+C` on the terminal or by finding the container id and stop it using docker daemon.
 
 ### 1. Get the running container id
 
 ```
 docker container ps
 ```
-Look for the AEM container id in the container list
+Look for the AEM container id in the container list.
 
 
 ### 2. Stop AEM
@@ -66,7 +66,7 @@ https://experienceleague.adobe.com/docs/experience-manager-learn/foundation/deve
 
 ### Packages
 #### AEM Jar file and AEM Demo Utils package
-Download and place the AEM jar file inside the `aem` folder and download the Demo Utils package in side the `packages` folder
+Download and place the AEM jar file inside the `aem` folder and download the Demo Utils package inside the `packages` folder
 https://external.adobedemo.com/content/demo-hub/en/demos/external/aem-demo-utils.html
 
 #### AEM packages (Feature Packs, Hotfix)
