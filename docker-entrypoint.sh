@@ -20,11 +20,11 @@ echo " _  /  / / / /_/ /_  / / / /_/ /_  /_/ //  __/  / "
 echo " /_/  /_/  \__,_/ /_/ /_/\__,_/ _\__, / \___//_/ "
 echo "                                /____/ "
 
-sleep 3s
+sleep 1s
 
-rpl "<name>" "$name" /aem/license.properties
-rpl "<key>" $downloadID /aem/license.properties
+rpl -q "<name>" "$name" /aem/license.properties
+rpl -q "<key>" $downloadID /aem/license.properties
 
 /aem/crx-quickstart/bin/start
 
-cd /aem/crx-quickstart/logs/ && parallel --tagstring "[{}]" --line-buffer tail -f {} ::: error.log access.log
+cd /aem/crx-quickstart/logs/ && parallel --tagstring "[{}]" --line-buffer tail -F {} ::: error.log access.log
