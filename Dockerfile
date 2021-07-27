@@ -42,6 +42,9 @@ RUN chmod +x $AEM_DIR/crx-quickstart/bin/start $AEM_DIR/crx-quickstart/bin/stop 
         && $AEM_DIR/crx-quickstart/bin/stop \
         && sleep 1m
 
+# Clean
+RUN rm $AEM_DIR/aem-$MODE-p$PORT.jar
+
 # Run AEM
 EXPOSE $PORT
 COPY ./docker-entrypoint.sh /
