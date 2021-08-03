@@ -1,0 +1,15 @@
+ARG AEM_VERSION=6.5.9
+FROM odyssee/aem:$AEM_VERSION
+
+ARG PACKAGES_DIR=packages
+
+# Copy the packages for startup installation
+COPY ./$PACKAGES_DIR/2.* /$AEM_DIR/crx-quickstart/install/
+COPY ./$PACKAGES_DIR/3.* /$AEM_DIR/crx-quickstart/install/
+
+# Start AEM and install packages
+RUN $AEM_DIR/crx-quickstart/bin/start \
+        && sleep 1m \
+        && (timeout 10m tail -f $AEM_DIR/crx-quickstart/logs/error.log; exit 0) \
+        && $AEM_DIR/crx-quickstart/bin/stop \
+        && sleep 1m

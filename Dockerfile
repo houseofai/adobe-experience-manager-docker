@@ -24,7 +24,7 @@ COPY $AEM_DIR/license.properties $AEM_DIR
 RUN cd $AEM_DIR && java -jar aem-$MODE-p$PORT.jar -unpack
 
 # Copy the packages for startup installation
-COPY ./$PACKAGES_DIR /$AEM_DIR/crx-quickstart/install/
+COPY ./$PACKAGES_DIR/1.* /$AEM_DIR/crx-quickstart/install/
 
 # Install CIF Components & Venia
 # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
