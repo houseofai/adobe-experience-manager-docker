@@ -7,7 +7,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG MODE=author
 ARG PORT=4502
 
-
 RUN apt-get update && apt-get install -y maven git parallel rpl \
       && mvn -version \
       && mkdir -p ~/.m2/repository
@@ -25,6 +24,7 @@ RUN cd $AEM_DIR && java -jar aem-$MODE-p$PORT.jar -unpack
 
 # Copy the packages for startup installation
 COPY ./$PACKAGES_DIR/1.* /$AEM_DIR/crx-quickstart/install/
+RUN ls /$AEM_DIR/crx-quickstart/install/
 
 # Install CIF Components & Venia
 # export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
@@ -34,11 +34,12 @@ COPY ./$PACKAGES_DIR/1.* /$AEM_DIR/crx-quickstart/install/
 #  && mvn clean install \
 #  && cp all/target/*.zip $AEM_DIR/crx-quickstart/install/
 
+
 # Start AEM and install packages
 RUN chmod +x $AEM_DIR/crx-quickstart/bin/start $AEM_DIR/crx-quickstart/bin/stop \
         && $AEM_DIR/crx-quickstart/bin/start \
         && sleep 1m \
-        && (timeout 10m tail -f $AEM_DIR/crx-quickstart/logs/error.log; exit 0) \
+        && (timeout 8m tail -f $AEM_DIR/crx-quickstart/logs/error.log; exit 0) \
         && $AEM_DIR/crx-quickstart/bin/stop \
         && sleep 1m
 
