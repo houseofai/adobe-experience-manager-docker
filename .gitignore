@@ -1,7 +1,7 @@
-*.jar
 license.properties
-packages/*.zip
 .idea/
 auth.json
+*.jar
 *.zip
+*.far
 projects/
