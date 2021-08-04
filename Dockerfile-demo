@@ -1,42 +1,12 @@
-ARG AEM_VERSION=6.5.9
-FROM odyssee/aem:$AEM_VERSION
+ARG AEM_VERSION=latest
+FROM odyssee/aem-sdk:$AEM_VERSION
 
-ARG PACKAGES_DIR=packages
-ARG AEM_DIR=aem
-
-RUN apt-get update \
-  && apt-get upgrade -y \
-  && apt-get install -y --no-install-recommends \
-  npm \
-  ssh
-
-
-# Copy the packages for startup installation
-COPY ./$PACKAGES_DIR/2.* /$AEM_DIR/crx-quickstart/install/
-COPY ./$PACKAGES_DIR/3.* /$AEM_DIR/crx-quickstart/install/
-RUN ls /$AEM_DIR/crx-quickstart/install/
+# Place the packages into the install folder
+COPY packages/demo/* /crx-quickstart/install/
 
 # Start AEM and install packages
-RUN /$AEM_DIR/crx-quickstart/bin/start \
-        && (timeout 4m tail -f /$AEM_DIR/crx-quickstart/logs/error.log; exit 0) \
-        && $AEM_DIR/crx-quickstart/bin/stop \
+RUN /crx-quickstart/bin/start \
+        && sleep 1m \
+        && (timeout 5m tail -f /crx-quickstart/logs/error.log; exit 0) \
+        && /crx-quickstart/bin/stop \
         && sleep 1m
-
-# Wknd
-RUN git clone --branch tutorial/react https://github.com/adobe/aem-guides-wknd-graphql.git
-
-RUN npm install -g npm \
-    && npm upgrade node \
-    && npm install --global yarn \
-    && npm cache clean -f \
-    && npm install -g n \
-    && n stable \
-    && PATH="$PATH"
-    
-RUN cd aem-guides-wknd-graphql/react-app/ \
-    && npm install
-
-EXPOSE 4502 3000
-
-COPY ./docker-entrypoint-demo.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh

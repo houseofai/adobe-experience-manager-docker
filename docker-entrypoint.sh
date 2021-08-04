@@ -22,9 +22,6 @@ echo "                                /____/ "
 
 sleep 1s
 
-rpl -q "<name>" "$name" /aem/license.properties
-rpl -q "<key>" $downloadID /aem/license.properties
+/crx-quickstart/bin/start
 
-/aem/crx-quickstart/bin/start
-
-cd /aem/crx-quickstart/logs/ && parallel --tagstring "[{}]" --line-buffer tail -F {} ::: error.log access.log
+cd /crx-quickstart/logs/ && parallel --tagstring "[{}]" --line-buffer tail -F {} ::: error.log access.log
