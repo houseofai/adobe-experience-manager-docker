@@ -1,25 +1,18 @@
-# Adobe Experience Manager docker image for Demo
+# Adobe Experience Manager as a Cloud SDK docker image for Demo
 
 The Adobe Experience Manager (AEM) docker image is an **unofficial** docker image build to quickly demo AEM without installing any additional package.
 
 The default image runs AEM as an **Author** on port **4502** (as recommended officially), and it includes the latest features pack and demo pack to demo all functionalities.
 
 ## Prerequisites
-Adobe Experience Manager is a non-free application sold by Adobe. Thus, you need to acquire a license as an Adobe partner or as an Adobe customer.
-- The AEM license file named `license.properties` with the four properties:
-```
-license.product.name=Adobe Experience Manager
-license.customer.name=<name>
-license.product.version=<Product Version>
-license.downloadID=<key>
-```
+- Docker
 
 ## Run
 
 ### 1. Pull the Docker image:
 
 ```
-docker pull houseofai/aem
+docker pull odyssee/aem-sdk-demo
 ```
 *Note:* It's a ~10Gb image. So, sit tight and get a coffee.
 
@@ -28,16 +21,7 @@ If you have a slow network connection or if you don't want to download that big 
 ### 2. Run the Container
 
 ```
-docker run -p 4502:4502 -e name="<name>" -e downloadID="<key>" -t houseofai/aem
-```
-where `name` is your Customer/Partner Name and `key` is your downloadID taken from the `license.properties` file. For example:
-
-```
-docker run -p 4502:4502 -e name="SuperMarketStore" -e downloadID="123456" -t houseofai/aem
-```
-*Note* that you can also change the port of the container will be mapped to (not the AEM port):
-```
-docker run -p 80:4502 -e name="SuperMarketStore" -e downloadID="123456" -t houseofai/aem
+docker run -p 4502:4502 -t odyssee/aem-sdk-demo
 ```
 
 Once up and running, the docker container will automatically show the main AEM log file `error.log` using linux tool `tail`
@@ -56,11 +40,15 @@ Look for the AEM container id in the container list.
 
 ### 2. Stop AEM
 
-`docker container exec {container_id} /root/aem-sdk/author/crx-quickstart/bin/stop && sleep 1m`
+```
+docker container exec {container_id} /crx-quickstart/bin/stop && sleep 1m
+```
 
 ### 3. Stop the container
 
-`docker container stop {container_id}`
+```
+docker container stop {container_id}
+```
 
 ## Build (Optional)
 ### Instruction for setting up an AEM Demo Docker image
@@ -75,12 +63,12 @@ Download and place the AEM jar file inside the `aem` folder and download the Dem
 https://external.adobedemo.com/content/demo-hub/en/demos/external/aem-demo-utils.html
 
 #### AEM packages (Feature Packs, Hotfix)
-Download and place all packages to be installed during the AEM startup phase inside the `packages` folder
-https://experience.adobe.com/#/downloads/content/software-distribution/en/aem.html
+Download and place all packages to be installed during the AEM startup phase inside the `packages/demo` folder
+https://experience.adobe.com/#/downloads/content/software-distribution/en/aem.html (access required)
 
 ## Setup
 
-`git clone https://github.com/houseofai/aem-demo-docker.git`
+`git clone https://github.com/houseofai/adobe-experience-manager-docker.git`
 
 Adapt your build by modifying the `Dockerfile`
 
